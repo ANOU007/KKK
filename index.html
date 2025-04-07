@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HoloCompare - Mobile Appliance Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .logo-circle h2 {
+            color: #007bff;
+            margin: 0;
+        }
+
+        .login-signup a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .login-signup a:hover {
+            text-decoration: underline;
+        }
+
+        .search-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .search-container input {
+            padding: 10px;
+            width: 60%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #0056b3;
+        }
+
+        nav {
+            background-color: #f1f1f1;
+            padding: 10px 20px;
+        }
+
+        .category-menu {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .category-menu li {
+            margin: 0 15px;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .category-menu li:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        #product-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .product-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 15px;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .product-card button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .product-card button:hover {
+            background-color: #218838;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #343a40;
+            color: white;
+            padding: 20px 10px;
+            margin-top: auto;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo-circle">
+                <img src="HC"></img>
+            </div>
+            <span>HoloCompare</span>
+        </div>
+        <div class="login-signup">
+            <a href="login.html">Login</a> | <a href="signup.html">Sign Up</a>
+        </div>
+    </header>
+
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search for mobile appliances...">
+        <button onclick="searchProducts()">Search</button>
+    </div>
+
+    <nav>
+        <ul class="category-menu">
+            <li style="color: red;" onclick="filterByCategory('smartphones')">Smartphones</li>
+            <li style="color: blue;" onclick="filterByCategory('tablets')">Tablets</li>
+            <li style="color: green;" onclick="filterByCategory('wearables')">Wearables</li>
+        </ul>
+    </nav>
+
+    <main id="product-list">
+        <!-- Product items will be displayed here dynamically -->
+    </main>
+
+    <footer>
+        <p>© 2024 HoloCompare</p>
+        <p>Developed by Hari Devadharshini, Diviya Dharshini, Gayathri, Krithika</p>
+        <p>Contact: <a href="mailto:vh13052_it23@velhightech.com">vh13052_it23@velhightech.com</a></p>
+    </footer>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: "iPhone 16 pro",
+                image: 'file:///C:/Users/hp/OneDrive/Desktop/test/iPhone_16.jpg.png',
+                description: 'Latest mobile from Apple with 6GB RAM and 265GB storage',
+                category: "smartphones",
+                price:"1,40,999",
+                competitorPrices: {
+                   Apple: { price: '1,99,900', url:'https://www.apple.com' }
+            },
+                reviews: [
+                    { user: "Alice", comment: "Amazing performance!", rating: 5 },
+                    { user: "Bob", comment: "Good, but expensive.", rating: 4 }
+                ]
+            },
+            {
+                id: 2,
+                name: "Samsung Galaxy S23",
+                category: "smartphones",
+                description: "Premium Android smartphone with advanced features.",
+                price: 899,
+                image: "galaxy_s23.jpg",
+                reviews: [
+                    { user: "Charlie", comment: "Best Android phone I've used.", rating: 5 }
+                ]
+            },
+            {
+                id: 3,
+                name: "iPad Pro",
+                category: "tablets",
+                description: "Powerful tablet with M1 chip and stunning display.",
+                price: 1199,
+                image: "ipad_pro.jpg",
+                reviews: []
+            },
+            {
+                id: 4,
+                name: "Apple Watch Series 8",
+                category: "wearables",
+                description: "Track your health and stay connected on the go.",
+                price: 399,
+                image: "apple_watch.jpg",
+                reviews: [
+                    { user: "Diana", comment: "Great fitness features.", rating: 4 }
+                ]
+            },
+            {
+                id: 5,
+                name: "Google Pixel 8",
+                category: "smartphones",
+                description: "Google's latest smartphone with Tensor G3 chip.",
+                price: 899,
+                image: "google_pixel_8.jpg",
+                reviews: [
+                    { user: "Eva", comment: "Great camera quality!", rating: 5 }
+                ]
+            },
+            {
+                id: 6,
+                name: "Microsoft Surface Pro 9",
+                category: "tablets",
+                description: "Versatile tablet with 12th Gen Intel Core processors.",
+                price: 1499,
+                image: "surface_pro_9.jpg",
+                reviews: [
+                    { user: "Frank", comment: "Perfect for productivity.", rating: 5 }
+                ]
+            },
+            {
+                id: 7,
+                name: "Samsung Galaxy Watch 6",
+                category: "wearables",
+                description: "Smartwatch with advanced health and fitness tracking.",
+                price: 350,
+                image: "galaxy_watch_6.jpg",
+                reviews: [
+                    { user: "Grace", comment: "Fantastic fitness tracker!", rating: 5 }
+                ]
+            },
+            {
+                id: 8,
+                name: "OnePlus 11 5G",
+                category: "smartphones",
+                description: "Flagship smartphone with Snapdragon 8 Gen 2.",
+                price: 749,
+                image: "oneplus_11.jpg",
+                reviews: [
+                    { user: "Hannah", comment: "Excellent performance for the price.", rating: 4 }
+                ]
+            },
+            {
+                id: 9,
+                name: "Xiaomi Mi 13",
+                category: "smartphones",
+                description: "Affordable flagship with powerful specs.",
+                price: 649,
+                image: "xiaomi_mi13.jpg",
+                reviews: []
+            },
+            {
+                id: 10,
+                name: "Huawei MatePad Pro 12.6",
+                category: "tablets",
+                description: "High-performance tablet with 120Hz OLED display.",
+                price: 799,
+                image: "huawei_matepad.jpg",
+                reviews: []
+            },
+            {
+                id: 11,
+                name: "Fitbit Sense 2",
+                category: "wearables",
+                description: "Smartwatch with advanced health tracking and GPS.",
+                price: 299,
+                image: "fitbit_sense_2.jpg",
+                reviews: []
+            },
+            {
+                id: 12,
+                name: "Oppo Reno 10 Pro",
+                category: "smartphones",
+                description: "AI-enhanced smartphone with fast charging.",
+                price: 729,
+                image: "oppo_reno_10.jpg",
+                reviews: []
+            },
+            {
+                id: 13,
+                name: "iPad Mini 6",
+                category: "tablets",
+                description: "Compact tablet with A15 Bionic chip.",
+                price: 499,
+                image: "ipad_mini_6.jpg",
+                reviews: []
+            },
+            {
+                id: 14,
+                name: "Garmin Fenix 7",
+                category: "wearables",
+                description: "Rugged smartwatch with advanced outdoor features.",
+                price: 699,
+                image: "garmin_fenix_7.jpg",
+                reviews: []
+            },
+            {
+                id: 15,
+                name: "Sony Xperia 1 IV",
+                category: "smartphones",
+                description: "Professional smartphone with a 4K OLED display.",
+                price: 1299,
+                image: "sony_xperia_1.jpg",
+                reviews: []
+            },
+            {
+                id: 16,
+                name: "Samsung Galaxy Tab S8",
+                category: "tablets",
+                description: "Premium tablet with Snapdragon 8 Gen 1.",
+                price: 899,
+                image: "galaxy_tab_s8.jpg",
+                reviews: []
+            },
+            {
+                id: 17,
+                name: "Samsung Galaxy Watch 5",
+                category: "wearables",
+                description: "Advanced health and fitness tracking with longer battery life.",
+                price: 349,
+                image: "galaxy_watch_5.jpg",
+                reviews: []
+            },
+            {
+                id: 18,
+                name: "Motorola Edge 40",
+                category: "smartphones",
+                description: "Sleek design with 68W TurboPower charging.",
+                price: 599,
+                image: "motorola_edge_40.jpg",
+                reviews: []
+            },
+            {
+                id: 19,
+                name: "Lenovo Tab P11 Pro",
+                category: "tablets",
+                description: "Media tablet with a high-quality display.",
+                price: 649,
+                image: "lenovo_tab_p11.jpg",
+                reviews: []
+            },
+            {
+                id: 20,
+                name: "Suunto 9 Peak",
+                category: "wearables",
+                description: "High-end fitness smartwatch for extreme conditions.",
+                price: 499,
+                image: "suunto_9_peak.jpg",
+                reviews: []
+            },
+            {
+                id: 21,
+                name: "Realme GT 2 Pro",
+                category: "smartphones",
+                description: "Flagship phone with 50MP triple camera setup.",
+                price: 849,
+                image: "realme_gt_2_pro.jpg",
+                reviews: []
+            },
+            {
+                id: 22,
+                name: "Apple Watch Ultra",
+                category: "wearables",
+                description: "Rugged smartwatch for extreme sports.",
+                price: 799,
+                image: "apple_watch_ultra.jpg",
+                reviews: []
+            },
+            {
+                id: 23,
+                name: "Asus ROG Phone 6",
+                category: "smartphones",
+                description: "Gaming phone with 165Hz AMOLED display.",
+                price: 1199,
+                image: "asus_rog_phone_6.jpg",
+                reviews: []
+            },
+            {
+                id: 24,
+                name: "Samsung Galaxy Tab A7",
+                category: "tablets",
+                description: "Affordable tablet with 10.4-inch display.",
+                price: 229,
+                image: "galaxy_tab_a7.jpg",
+                reviews: []
+            }
+        ];
+
+        function loadProducts(productList) {
+            const productListElement = document.getElementById('product-list');
+            productListElement.innerHTML = '';
+            productList.forEach((product) => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <img src="assets/images/${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    <strong>$${product.price}</strong>
+                    <h4>Competitor Prices:</h4>
+                    <button onclick="viewProduct(${product.id})">View Details</button>
+                `;
+                productListElement.appendChild(productCard);
+            });
+        }
+
+        function viewProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                const productDetails = `
+                    <div class="product-details">
+                        <h2>${product.name}</h2>
+                        <img src="assets/images/${product.image}" alt="${product.name}">
+                        <p>${product.description}</p>
+                        <strong>Price: $${product.price}</strong>
+                        <h3>Competitor Prices:</h3>
+                        <ul class="competitor-prices">${competitorpricelist}</ul>
+                        <h4>Reviews:</h4>
+                        <ul>
+                            ${product.reviews.map(r => `<li><strong>${r.user}</strong>: ${r.comment} (${r.rating}/5)</li>`).join('') || '<li>No reviews yet.</li>'}
+                        </ul>
+                        <button onclick="closeDetails()">Close</button>
+                    </div>
+
+                `;
+                document.getElementById('product-list').innerHTML = productDetails;
+            }
+        }
+
+        function closeDetails() {
+            loadProducts(products);
+        }
+
+        function searchProducts() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const filtered = products.filter(product => product.name.toLowerCase().includes(query));
+            loadProducts(filtered);
+        }
+
+        function filterByCategory(category) {
+            const filtered = products.filter(product => product.category === category);
+            loadProducts(filtered);
+        }
+
+        // Load all products initially
+        document.addEventListener('DOMContentLoaded', () => loadProducts(products));
+    </script>
+</body>
+</html>
